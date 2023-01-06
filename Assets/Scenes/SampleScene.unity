@@ -1662,7 +1662,7 @@ Rigidbody:
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
-  m_Interpolate: 0
+  m_Interpolate: 2
   m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!4 &1349007866
@@ -1696,7 +1696,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _move: {fileID: 7317242067884208208, guid: 7465c15ff2f50e14295da1356a60d5be, type: 3}
+  _animator: {fileID: 1794143068}
+  _meshTransform: {fileID: 1794143065}
   _speed: 10
+  _rotationspeed: 720
   _onEvent:
     m_PersistentCalls:
       m_Calls:
@@ -2473,6 +2476,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 146f949b2997a444ebf55082568c8448, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!95 &1794143068 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 9036980633323257398, guid: 2dfbb63c9cdf7504faf4ff26b0581598,
+    type: 3}
+  m_PrefabInstance: {fileID: 1794143064}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1850274031
 GameObject:
   m_ObjectHideFlags: 0

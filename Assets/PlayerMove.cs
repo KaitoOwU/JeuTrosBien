@@ -12,7 +12,11 @@ using UnityEngine.SceneManagement;
 public class PlayerMove : MonoBehaviour
 {
     [SerializeField] InputActionReference _move;
+    [SerializeField] Animator _animator;
+    [SerializeField] Transform _meshTransform;
+
     [SerializeField] float _speed;
+    [SerializeField] float _rotationspeed;
 
     // Event pour les dev
     public event Action OnStartMove;
@@ -23,6 +27,7 @@ public class PlayerMove : MonoBehaviour
     [SerializeField] UnityEvent _onEventPost;
 
     public Vector2 JoystickDirection { get; private set; }
+    private float _currentVelocity;
 
     Coroutine MovementRoutine { get; set; }
 
@@ -74,7 +79,18 @@ public class PlayerMove : MonoBehaviour
         while (true)
         {
             yield return new WaitForFixedUpdate();
-            transform.Translate(new Vector3(JoystickDirection.x, 0, JoystickDirection.y) * _speed * Time.fixedDeltaTime);
+            transform.Translate(new Vector3(JoystickDirection.x, 0, JoystickDirection.y) * _speed * Time.fixedDeltaTime, Space.World);
+
+
+            float targertAngle = Mathf.Atan2(JoystickDirection.x, JoystickDirection.y) * Mathf.Rad2Deg;
+            float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targertAngle, ref _currentVelocity, 0.01f);
+
+            _meshTransform.rotation = Quaternion.Euler(0, angle, 0);
+
+            //Quaternion rotation = Quaternion.LookRotation(JoystickDirection, new Vector3(0,1,0));
+            ////Quaternion correctRotation = Quaternion.Euler(0, rotation.y, 0);
+            //_meshTransform.rotation = Quaternion.RotateTowards(_meshTransform.rotation, rotation, _rotationspeed * Time.deltaTime);
+            ////_meshTransform.eulerAngles = new Vector3(0, _meshTransform.eulerAngles.y - _meshTransform.eulerAngles.x, 0);
         }
     }
 
@@ -82,6 +98,9 @@ public class PlayerMove : MonoBehaviour
     {
         JoystickDirection = obj.ReadValue<Vector2>();
         MovementRoutine = StartCoroutine(MoveRoutine());
+        _animator.SetBool("Walking", true);
+
+
     }
 
     private void UpdateMove(InputAction.CallbackContext obj)
@@ -94,6 +113,7 @@ public class PlayerMove : MonoBehaviour
         StopCoroutine(MovementRoutine);
         JoystickDirection = Vector2.zero;
         Debug.Log($"Stop Move : {obj.ReadValue<Vector2>()}");
+        _animator.SetBool("Walking", false);
     }
 
 
