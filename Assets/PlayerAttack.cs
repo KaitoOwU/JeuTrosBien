@@ -39,6 +39,11 @@ public class PlayerAttack : MonoBehaviour
                 {
                     _h.DamageEntity(_damageDealt);
                     OnAttack.Invoke();
+                    if(_h.CurrentHealth <= 0)
+                    {
+                        _hitEntity.ListEntitiesInRange.Remove(_h);
+                        Destroy(_h.gameObject);
+                    }
                 }
                 yield return new WaitForSeconds(_cooldown);
             }

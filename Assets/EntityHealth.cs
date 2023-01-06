@@ -19,11 +19,6 @@ public class EntityHealth : MonoBehaviour
         Debug.Log("ssf");
         CurrentHealth -= damageDealt;
         OnHealthChange?.Invoke(CurrentHealth);
-
-        if (CurrentHealth <= 0)
-        {
-            Destroy(gameObject);
-        }
     }
 
     internal void Heal(int healthHealed)
