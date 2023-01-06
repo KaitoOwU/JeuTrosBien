@@ -2,10 +2,11 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Item : MonoBehaviour
 {
-
+    [SerializeField] protected UnityEvent OnPickUp;
     public event Action OnItemPickedByPlayer;
     [SerializeField] Collider _collider;
 
@@ -21,7 +22,7 @@ public class Item : MonoBehaviour
 
     public virtual void PickUp()
     {
-        Destroy(gameObject);
+        OnPickUp?.Invoke();
     }
 
     private void OnTriggerEnter(Collider c)

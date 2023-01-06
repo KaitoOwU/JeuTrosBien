@@ -14,6 +14,7 @@ public class PlayerMove : MonoBehaviour
     [SerializeField] InputActionReference _move;
     [SerializeField] AnimatorBinding _animation;
     [SerializeField] Transform _meshTransform;
+    [SerializeField] Transform _coliderTransform;
 
     [SerializeField] float _speed;
     [SerializeField] float _rotationspeed;
@@ -87,6 +88,7 @@ public class PlayerMove : MonoBehaviour
             float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targertAngle, ref _currentVelocity, 0.01f);
 
             _meshTransform.rotation = Quaternion.Euler(0, angle, 0);
+            _coliderTransform.rotation = Quaternion.Euler(0, angle, 0);
 
             //Quaternion rotation = Quaternion.LookRotation(JoystickDirection, new Vector3(0,1,0));
             ////Quaternion correctRotation = Quaternion.Euler(0, rotation.y, 0);
@@ -101,6 +103,12 @@ public class PlayerMove : MonoBehaviour
         MovementRoutine = StartCoroutine(MoveRoutine());
 
 
+    }
+
+    public void WalkParticule(ParticleSystem particule)
+    {
+        Instantiate(particule, transform);
+        Destroy(particule, 0.5f);
     }
 
     private void UpdateMove(InputAction.CallbackContext obj)
