@@ -9,6 +9,7 @@ public class EntityHealth : MonoBehaviour
     [SerializeField] int _maxHealth;
 
     public int CurrentHealth { get; private set; }
+    public int MaxHealth { get => _maxHealth; private set => _maxHealth = value; }
 
     public event Action<int> OnHealthChange;
 
@@ -26,6 +27,7 @@ public class EntityHealth : MonoBehaviour
     private void Awake()
     {
         CurrentHealth = _maxHealth;
+        OnHealthChange.Invoke(CurrentHealth);
     }
 
 

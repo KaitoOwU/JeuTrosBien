@@ -12,17 +12,16 @@ public class HealthUI : MonoBehaviour
     [SerializeField] TextMeshProUGUI _text;
     [SerializeField] EntityHealth _playerHealth;
 
-    int CachedMaxHealth { get; set; }
-
     private void Awake()
     {
         _playerHealth.OnHealthChange += UpdateSlider;
+        UpdateSlider(_playerHealth.CurrentHealth);
     }
 
     void UpdateSlider(int newHealthValue)
     {
         _slider.value = newHealthValue;
-        _text.text = $"{newHealthValue} / {CachedMaxHealth}";
+        _text.text = $"{newHealthValue} / {_playerHealth.MaxHealth}";
     }
 
 }
