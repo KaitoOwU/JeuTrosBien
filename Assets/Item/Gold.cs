@@ -10,6 +10,6 @@ public class Gold : Item
 
     public override void PickUp()
     {
-        
+
     }
 }

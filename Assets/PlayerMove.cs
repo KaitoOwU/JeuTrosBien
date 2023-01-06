@@ -12,7 +12,7 @@ using UnityEngine.SceneManagement;
 public class PlayerMove : MonoBehaviour
 {
     [SerializeField] InputActionReference _move;
-    [SerializeField] Animator _animator;
+    [SerializeField] AnimatorBinding _animation;
     [SerializeField] Transform _meshTransform;
 
     [SerializeField] float _speed;
@@ -20,6 +20,7 @@ public class PlayerMove : MonoBehaviour
 
     // Event pour les dev
     public event Action OnStartMove;
+    public event Action OnEndMove;
     public event Action<int> OnHealthUpdate;
 
     // Event pour les GD
@@ -98,7 +99,6 @@ public class PlayerMove : MonoBehaviour
     {
         JoystickDirection = obj.ReadValue<Vector2>();
         MovementRoutine = StartCoroutine(MoveRoutine());
-        _animator.SetBool("Walking", true);
 
 
     }
@@ -113,7 +113,7 @@ public class PlayerMove : MonoBehaviour
         StopCoroutine(MovementRoutine);
         JoystickDirection = Vector2.zero;
         Debug.Log($"Stop Move : {obj.ReadValue<Vector2>()}");
-        _animator.SetBool("Walking", false);
+        OnEndMove?.Invoke();
     }
 
 

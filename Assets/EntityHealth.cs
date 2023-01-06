@@ -15,6 +15,7 @@ public class EntityHealth : MonoBehaviour
 
     internal void DamageEntity(int damageDealt)
     {
+        Debug.Log("ssf");
         CurrentHealth -= damageDealt;
         OnHealthChange.Invoke(CurrentHealth);
 
@@ -27,7 +28,7 @@ public class EntityHealth : MonoBehaviour
     private void Awake()
     {
         CurrentHealth = _maxHealth;
-        OnHealthChange.Invoke(CurrentHealth);
+        OnHealthChange?.Invoke(CurrentHealth);   
     }
 
 
