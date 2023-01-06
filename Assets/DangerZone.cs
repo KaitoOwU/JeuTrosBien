@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class DangerZone : MonoBehaviour
 {
@@ -9,6 +10,8 @@ public class DangerZone : MonoBehaviour
 
     List<EntityHealth> _listEntitiesInRange = new();
     public event Action OnTick;
+
+    [SerializeField] UnityEvent OnTickGD;
 
 
     public List<EntityHealth> ListEntitiesInRange { get => _listEntitiesInRange; }
@@ -21,6 +24,7 @@ public class DangerZone : MonoBehaviour
         {
             EntityHealth entityHealth = c.GetComponentInParent<EntityHealth>();
             entityHealth.DamageEntity(_damageToEntities);
+            OnTickGD?.Invoke();
             OnTick?.Invoke();
 
             //Debug.Log("detected");

@@ -16,6 +16,7 @@ public class PlayerAttack : MonoBehaviour
 
     public int DamageDealth { get => _damageDealt; set => _damageDealt = value; }
 
+
     private void Start()
     {
         _attack.action.started += Attack;
