@@ -4,15 +4,10 @@ using UnityEngine;
 
 public class PowerUp : Item
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] PlayerAttack _attack;
+    public override void PickUp()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        _attack.DamageDealth += 1;
+        Destroy(gameObject);
     }
 }

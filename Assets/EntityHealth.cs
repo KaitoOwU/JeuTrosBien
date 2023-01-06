@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 public class EntityHealth : MonoBehaviour
 {
@@ -17,7 +18,7 @@ public class EntityHealth : MonoBehaviour
     {
         Debug.Log("ssf");
         CurrentHealth -= damageDealt;
-        OnHealthChange.Invoke(CurrentHealth);
+        OnHealthChange?.Invoke(CurrentHealth);
 
         if (CurrentHealth <= 0)
         {
@@ -25,10 +26,17 @@ public class EntityHealth : MonoBehaviour
         }
     }
 
+    internal void Heal(int healthHealed)
+    {
+        Assert.IsTrue(healthHealed > 0);
+        CurrentHealth = Mathf.Clamp(CurrentHealth + healthHealed, 0, MaxHealth);
+        OnHealthChange?.Invoke(CurrentHealth);
+    }
+
     private void Awake()
     {
         CurrentHealth = _maxHealth;
-        OnHealthChange?.Invoke(CurrentHealth);   
+        OnHealthChange?.Invoke(CurrentHealth);
     }
 
 

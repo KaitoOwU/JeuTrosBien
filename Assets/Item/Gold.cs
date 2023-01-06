@@ -10,6 +10,7 @@ public class Gold : Item
 
     public override void PickUp()
     {
-
+        _goldUI.GiveGold();
+        Destroy(gameObject);
     }
 }

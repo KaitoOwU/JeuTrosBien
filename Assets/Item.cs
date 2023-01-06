@@ -26,7 +26,7 @@ public class Item : MonoBehaviour
 
     private void OnTriggerEnter(Collider c)
     {
-        if (c.GetComponent<PlayerMove>())
+        if (c.GetComponentInParent<PlayerMove>())
         {
             OnItemPickedByPlayer.Invoke();
         }

@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
 public class PlayerAttack : MonoBehaviour
@@ -11,6 +12,9 @@ public class PlayerAttack : MonoBehaviour
     [SerializeField] int _damageDealt;
     [SerializeField] HitEntity _hitEntity;
     [SerializeField] float _cooldown;
+    [SerializeField] UnityEvent OnAttack;
+
+    public int DamageDealth { get => _damageDealt; set => _damageDealt = value; }
 
     private void Start()
     {
@@ -26,13 +30,16 @@ public class PlayerAttack : MonoBehaviour
     {
         IEnumerator AttackCoroutine()
         {
-            while (obj.performed)
+
+            while (obj.ReadValueAsButton())
             {
+                _animator.SetTrigger("Attack");
                 foreach(EntityHealth _h in _hitEntity.ListEntitiesInRange)
                 {
                     _h.DamageEntity(_damageDealt);
-                    yield return new WaitForSeconds(_cooldown);
+                    OnAttack.Invoke();
                 }
+                yield return new WaitForSeconds(_cooldown);
             }
         }
         StartCoroutine(AttackCoroutine());
