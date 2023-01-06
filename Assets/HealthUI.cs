@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -12,6 +13,11 @@ public class HealthUI : MonoBehaviour
     [SerializeField] EntityHealth _playerHealth;
 
     int CachedMaxHealth { get; set; }
+
+    private void Awake()
+    {
+        _playerHealth.OnHealthChange += UpdateSlider;
+    }
 
     void UpdateSlider(int newHealthValue)
     {

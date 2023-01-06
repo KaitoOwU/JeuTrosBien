@@ -4,15 +4,14 @@ using UnityEngine;
 
 public class PlayerAttack : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [SerializeField] int damageDealt;
+    [SerializeField] HitEntity _hitEntity;
 
-    // Update is called once per frame
-    void Update()
+    void Attack()
     {
-        
+        foreach(EntityHealth _h in _hitEntity.ListEntitiesInRange)
+        {
+            _h.DamageEntity(damageDealt);
+        }
     }
 }

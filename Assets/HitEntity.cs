@@ -4,15 +4,22 @@ using UnityEngine;
 
 public class HitEntity : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    List<EntityHealth> _listEntitiesInRange = new();
+    public List<EntityHealth> ListEntitiesInRange { get => _listEntitiesInRange; }
+
+    private void OnTriggerEnter(Collider c)
     {
-        
+        if (c.GetComponent<EntityHealth>())
+        {
+            ListEntitiesInRange.Add(c.GetComponent<EntityHealth>());
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnTriggerExit(Collider c)
     {
-        
+        if(ListEntitiesInRange.Contains(c.GetComponent<EntityHealth>()))
+        {
+            ListEntitiesInRange.Remove(c.GetComponent<EntityHealth>());
+        }
     }
 }
